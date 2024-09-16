@@ -1,190 +1,477 @@
-
 <!DOCTYPE html>
 <html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Volumetric design">
+  <meta name="keywords" content="Volumetric-design">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Volumetric design</title>
 
-<head lang="en">
-    <meta charset="UTF-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <style>
+      .arrow {
+        display: inline-block;
+        font-size: 40px; /* Adjust size as needed */
+        color: #555; /* Arrow color */
+        margin: 0 15px; /* Spacing around the arrow */
+      }
 
-    <title>volumetric-design</title>
+      .arrow::before {
+        content: "\27A4"; /* Unicode character for a rightwards arrow with a triangle arrowhead */
+      }
 
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+      .columns {
+      display: flex;
+      gap: 5px; /* Small gap between columns */
+      justify-content: center;
+      align-items: center;
+    }
 
-    <meta property="og:image" content="https://jonbarron.info/mipnerf360/img/gardenvase.jpg">
-    <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="1296">
-    <meta property="og:image:height" content="840">
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://jonbarron.info/mipnerf360/"/>
-    <meta property="og:title" content="Representation Learning for Sequential Volumetric Design Tasks" />
-    <meta property="og:description" content="Though neural radiance fields (NeRF) have demonstrated impressive view synthesis results on objects and small bounded regions of space, they struggle on 'unbounded' scenes, where the camera may point in any direction and content may exist at any distance. In this setting, existing NeRF-like models often produce blurry or low-resolution renderings (due to the unbalanced detail and scale of nearby and distant objects), are slow to train, and may exhibit artifacts due to the inherent ambiguity of the task of reconstructing a large scene from a small set of images. We present an extension of mip-NeRF (a NeRF variant that addresses sampling and aliasing) that uses a non-linear scene parameterization, online distillation, and a novel distortion-based regularizer to overcome the challenges presented by unbounded scenes. Our model, which we dub 'mip-NeRF 360' as we target scenes in which the camera rotates 360 degrees around a point, reduces mean-squared error by 54% compared to mip-NeRF, and is able to produce realistic synthesized views and detailed depth maps for highly intricate, unbounded real-world scenes." />
+    .stl-viewer {
+      width: 100%;
+      max-width: 300px; /* Limit maximum width */
+      height: auto; /* Maintain aspect ratio */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 0 auto; /* Center the element */
+    }
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Representation Learning for Sequential Volumetric Design Tasks" />
-    <meta name="twitter:description" content="Though neural radiance fields (NeRF) have demonstrated impressive view synthesis results on objects and small bounded regions of space, they struggle on 'unbounded' scenes, where the camera may point in any direction and content may exist at any distance. In this setting, existing NeRF-like models often produce blurry or low-resolution renderings (due to the unbalanced detail and scale of nearby and distant objects), are slow to train, and may exhibit artifacts due to the inherent ambiguity of the task of reconstructing a large scene from a small set of images. We present an extension of mip-NeRF (a NeRF variant that addresses sampling and aliasing) that uses a non-linear scene parameterization, online distillation, and a novel distortion-based regularizer to overcome the challenges presented by unbounded scenes. Our model, which we dub 'mip-NeRF 360' as we target scenes in which the camera rotates 360 degrees around a point, reduces mean-squared error by 54% compared to mip-NeRF, and is able to produce realistic synthesized views and detailed depth maps for highly intricate, unbounded real-world scenes." />
-    <meta name="twitter:image" content="https://jonbarron.info/mipnerf360/img/gardenvase.jpg" />
+    model-viewer {
+      width: 100%; /* Make the 3D model viewer responsive */
+      height: auto; /* Maintain aspect ratio */
+    }
 
+  </style>
+  <script>
+    window.dataLayer = window.dataLayer || [];
 
-<link rel="icon" href="img/D_10_S_119_5.png">
+    function gtag() {
+      dataLayer.push(arguments);
+    }
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
-    <link rel="stylesheet" href="css/app.css">
+    gtag('js', new Date());
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
-    
-    <script src="js/app.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/icon.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
 </head>
-
 <body>
-    <div class="container" id="main">
-        <div class="row">
-            <h2 class="col-md-12 text-center">
-                <b>Representation Learning for Sequential Volumetric Design Tasks</br> 
-                <small>
-                </small>
-            </h2>
-        </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <ul class="list-inline">
-                    <li>
-                        <a href="https://ferdous-alam.github.io/">
-                          Md Ferdous Alam
-                        </a>
-                        </br>The Ohio State University
-                    </li>
-                    <li>
-                        <a href="">
-                            Yi Wang
-                        </a>
-                        </br>Autodesk
-                    </li>
-                    <li>
-                        <a href="">
-                        Linh Tran
-                        </a>
-                        </br>Imperial College London
-                    </li><br>
-                    <li>
-                        <a href="">
-                        Chin-Yi Cheng
-                        </a>
-                        </br>Google
-                    </li>
-                    <li>
-                        <a href="">
-                        Jieliang Luo
-                        </a>
-                        </br>Autodesk
-                    </li>
-                </ul>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://ferdous-alam.github.io/">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Representation Learning for Sequential Volumetric Design Tasks
+            </h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://ferdous-alam.github.io/">Md Ferdous Alam</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.research.autodesk.com/people/yi-wang/">Yi Wang</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=TmYzzFcAAAAJ&hl=en">Chin-Yi Cheng</a><sup>3</sup>,</span>      
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=wsurdVIAAAAJ&hl=en">Jieliang Luo</a><sup>2</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>The Ohio State University</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>2</sup>Google Research</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>3</sup>Autodesk Research</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a> -->
             </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body" style="text-align: center; display: flex; align-items: center; justify-content: center;">
+
+      <!-- Image Teaser -->
+      <div class="teaser-image" style="display: inline-block;">
+        <img src="./static/images/teaser_image.jpeg" alt="Teaser Image" style="width: 500px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+      </div>
+
+    </div>
+    <h2 class="subtitle has-text-centered" style="margin-top: 20px;">
+      <span class="dnerf">We demonstrate generative model for sequential volumetric design
+    </h2>
+  </div>
+</section>
+
+<!-- Add this script to include the model-viewer library -->
+<script type="module" src="https://unpkg.com/@google/model-viewer@v1.9.2/dist/model-viewer.min.js"></script>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Many design tasks are essentially sequential in nature, which requires numerous iterations and is often time-consuming due to the use of heuristics or manual approaches \cite{Peters, rahman2021predicting, shergadwala2018quantifying}. We argue that the sequential approach to engineering design is particularly useful and convenient not only from the technical perspective but also from the design perspective. The sequential approach can allow human designers to understand, intervene and modify an existing design and thus have the potential to accelerate the design pipeline by a large margin.
+          </p>
+          <p>
+            While previous approaches focused on learning only the final design instead of sequential design tasks, we propose to encode the design knowledge from a collection of expert or high-performing design sequences and extract useful representations using transformer-based models. Later we propose to utilize the learned representations for crucial downstream applications such as design preference evaluation and procedural design generation. We develop the preference model by estimating the density of the learned representations whereas we train an autoregressive transformer model for sequential design generation. We demonstrate our ideas by leveraging a novel dataset of thousands of sequential volumetric designs. Our preference model can compare two arbitrarily given design sequences and is almost 90% accurate in evaluation against random design sequences. Our autoregressive model is also capable of autocompleting a volumetric design sequence from a partial design sequence.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+  
+    <!-- Animation. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+
+        <h2 class="title is-3">CAD generation</h2>
+
+        <!-- Image-conditional CAD -->
+        <h3 class="title is-4">Image-conditional CAD generation</h3>
+        <div class="content has-text-justified">
+          <p>
+            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
+            viewpoint such as a stabilized camera by playing back the training deformations.
+          </p>
         </div>
 
-
-        <div class="row">
-                <div class="col-md-4 col-md-offset-4 text-center">
-                    <ul class="nav nav-pills nav-justified">
-                        <li>
-                            <a href="https://arxiv.org/abs/2309.02583">
-                            <image src="img/paper_image.png" height="120px">
-                                <h4><strong>Paper</strong></h4>
-                            </a>
-                        </li>
-                        <!-- <li>
-                            <a href="TODO">
-                            <image src="img/github.png" height="60px">
-                                <h4><strong>Code</strong></h4>
-                            </a>
-                        </li> -->
-                    </ul>
-                </div>
-        </div>
-
-
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 text-center">
-                <image src="img/teaser_image.jpeg"height="500px">
-            </div>
-
-            <div class="col-md-8 col-md-offset-2">
-                <p class="text-center">
-                    Downstream applications for representation learning in volumetric design tasks
-                </p>
-            </div>
-        </div>
+        <div class="columns is-vcentered is-mobile is-gapless"> <!-- Added is-gapless class -->
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <img src="./static/images/289.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+          </div>
         
-
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h3>
-                    Abstract
-                </h3>
-                <p class="text-justify">
-                    Architectural design tasks are essentially sequential in nature. Based on this intuition, here we propose an alternative perspective on data-driven automation in architectural design tasks. Our key idea is to encode the design knowledge from a collection of expert or high-permorning sequential designs and extract useful representations. Later we propose to utilize those learned representations for crucial downstream applications such as design preference evaluation and procedural design generation. Specifically, we demonstrate our idea by leveraging a novel dataset of sequential volumetric designs. Volumetric design, also called massing design, is the first and critical step in professional building design. Many efforts have been made to automatically generate reasonable volumetric designs, but the quality of the generated design solutions varies, and evaluating a design solution requires either a prohibitively comprehensive set of metrics or expensive human expertise. To improve the efficiency and accuracy of volumetric design evaluation, we propose a learning-based approach to create a preference model trained only from high-performing building design solutions. We assume the high-performing designs should have inherent similarities and that we can capture these similarities by extracting features from the high-performing solutions. The preference model can then compare two arbitrarily given volumetric designs. In addition, not only can our model evaluate static solutions but also the design process as the model can take time-series data as input. Finally, we develop an autoregressive model to generate volumetric designs from a partial design input and discuss its capabilities using the novel dataset. 
-                </p>
-            </div>
-        </div>
-
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <img src="./static/images/198.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+          </div>
         
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <img src="./static/images/386.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+          </div>
+        
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <img src="./static/images/390.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+          </div>
+        </div>
 
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <image src="img/model_v2_color.jpeg" class="centerImage" height="400"></image>
-                
-                <!-- <video id="v0" width="100%" autoplay loop muted controls>
-                  <source src="img/S_0_T_5_GT.png" type="video/mp4" />
-                </video> -->
-						</div>
-            <div class="col-md-8 col-md-offset-2">
-							<p class="text-center">
-							Learning a preference model from high performance design sequences
-							</p>
-						</div>
+
+        <div class="columns is-vcentered is-mobile is-gapless">
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/289.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
+        
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/198.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
+        
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/386.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
+        
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/390.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
+        </div>
+
+
+        <!-- Image-conditional CAD -->
+        <h3 class="title is-4">Sample diversity of GenCAD</h3>
+        <div class="content has-text-justified">
+          <p>
+            Using <span class="dnerf">GenCAD</span>, you can get multiple CAD samples for the same image input.
+          </p>
+        </div>
+
+        <div class="columns is-vcentered is-mobile is-gapless">
+
+          <!-- sample diversity 1 -->
+          <div class="teaser-image" style="display: inline-block;">
+            <img src="./static/images/sample_diversity_1.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+          </div>
+
+          <!-- Unicode Arrow to GenCAD Box -->
+          <div class="arrow-container" style="display: flex; align-items: center; margin: 0 5px;">
+            <span class="arrow"></span>
+          </div>
+
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/sample_diversity_1_1.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
+
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/sample_diversity_1_2.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
+
+
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/sample_diversity_1_3.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
         </div>
 
 
 
+        <div class="columns is-vcentered is-mobile is-gapless">
+
+          <!-- sample diversity 2 -->
+          <div class="teaser-image" style="display: inline-block;">
+            <img src="./static/images/sample_diversity_2.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+          </div>
+
+          <!-- Unicode Arrow to GenCAD Box -->
+          <div class="arrow-container" style="display: flex; align-items: center; margin: 0 5px;">
+            <span class="arrow"></span>
+          </div>
+
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/sample_diversity_2_1.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
+
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/sample_diversity_2_2.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
 
 
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h3>
-                    Results
-                </h3>
-                <div class="col-md-8 col-md-offset-2 text-center">
-                    <image src="img/preference_score-1.png" height="400"></image>
-                    <image src="img/sequential_FID_score-1.png" height="300"></image>    
-                </div>
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/sample_diversity_2_3.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
+        </div>
 
+
+      </div>      
+    </div>
+
+
+
+    <!-- Retrieval. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">CAD retrieval</h2>
+
+        <!-- Retrieval -->
+        <h3 class="title is-4">Image-conditional CAD retrieval</h3>
+        <div class="content has-text-justified">
+          <p>
+            Next, we show the image-conditional CAD retrieval capabilities of GenCAD. Here we retrieve the top-3 CAD programs from a collection of ~7000 CAD programs.
+          </p>
+        </div>
+
+        <div class="columns is-vcentered is-mobile is-gapless">
+
+          <!-- retrieval 1 -->
+          <div class="teaser-image" style="display: inline-block;">
+            <img src="./static/images/retrieval_1.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+          </div>
+
+          <!-- Unicode Arrow to GenCAD Box -->
+          <div class="arrow-container" style="display: flex; align-items: center; margin: 0 5px;">
+            <span class="arrow"></span>
+          </div>
+
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/retrieval_1_1.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
+
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/retrieval_1_2.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
+
+
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/retrieval_1_3.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
         </div>
 
 
 
+        <div class="columns is-vcentered is-mobile is-gapless">
+
+          <!-- retrieval 2 -->
+          <div class="teaser-image" style="display: inline-block;">
+            <img src="./static/images/retrieval_2.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+          </div>
+
+          <!-- Unicode Arrow to GenCAD Box -->
+          <div class="arrow-container" style="display: flex; align-items: center; margin: 0 5px;">
+            <span class="arrow"></span>
+          </div>
+
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/retrieval_2_1.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
+
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/retrieval_2_2.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
 
 
-        <!-- <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h3>
-                    Acknowledgements
-                </h3>
-                <p class="text-justify">
-                Thanks to Ricardo Martin-Brualla and David Salesin for their comments on the text, and to George Drettakis and Georgios Kopanas for graciously assisting us with our baseline evaluation.
-                    <br>
-                The website template was borrowed from <a href="http://mgharbi.com/">Michaël Gharbi</a>.
-                </p>
-            </div>
+          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
+            <model-viewer src="./static/mesh/retrieval_2_3.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </model-viewer>
+          </div>
         </div>
-    </div> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{alam2024gencad,
+  author    = {Alam, Md Ferdous and Ahmed, Faez},
+  title     = {GenCAD: Image-conditioned Computer-Aided Design Generation with Transformer-based Contrastive Representation and Diffusion Priors},
+  journal   = {xxxx},
+  year      = {xxxx},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://github.com/ferdous-alam" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            template for this website is borrowed from <a
+              href="https://github.com/nerfies/nerfies.github.io">here</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
