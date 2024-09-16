@@ -128,7 +128,7 @@
           <div class="column has-text-centered">
             <div class="publication-links">
               <!-- PDF Link. -->
-              <!-- <span class="link-block">
+              <span class="link-block">
                 <a href=""
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
@@ -136,9 +136,10 @@
                   </span>
                   <span>Paper</span>
                 </a>
-              </span> -->
+              </span>
+
               <span class="link-block">
-                <a href=""
+                <a href="https://arxiv.org/abs/2309.02583"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="ai ai-arxiv"></i>
@@ -146,26 +147,7 @@
                   <span>arXiv</span>
                 </a>
               </span>
-              <!-- Video Link. -->
-              <span class="link-block">
-                <a href=""
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-youtube"></i>
-                  </span>
-                  <span>Video</span>
-                </a>
-              </span>
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href=""
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                  </a>
-              </span>
+
               <!-- Dataset Link. -->
               <!-- <span class="link-block">
                 <a href="https://github.com/google/nerfies/releases/tag/0.1"
@@ -230,209 +212,80 @@
 <section class="section">
   <div class="container is-max-desktop">
 
-  
-    <!-- Animation. -->
+          
+        <!-- Animation. -->
+        <div class="columns is-centered">
+          <div class="column is-full-width">
+
+            <h2 class="title is-3">Voxel sequence reconstruction</h2>
+
+            <div class="content has-text-justified">
+              <p>
+                Our transformer based model can successfully reconstruct voxel sequences.
+              </p>
+            </div>
+
+            <!-- Ground Truth Section -->
+            <div class="columns is-vcentered is-mobile is-gapless">
+              
+              <!-- First Ground Truth Image -->
+              <div class="column stl-viewer" style="display: flex; flex-direction: column; align-items: center; padding: 20;">
+                <span style="text-align: center; font-weight: bold;">Ground Truth</span>
+                <img src="./static/images/1.gif" alt="Ground Truth 1" style="width: 200px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+              </div>
+              
+              <!-- Second Ground Truth Image -->
+              <div class="column stl-viewer" style="display: flex; flex-direction: column; align-items: center; padding: 20;">
+                <span style="text-align: center; font-weight: bold;">Ground Truth</span>
+                <img src="./static/images/2.gif" alt="Ground Truth 2" style="width: 200px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+              </div>
+            
+            </div>
+
+            <!-- Reconstruction Section -->
+            <div class="columns is-vcentered is-mobile is-gapless">
+              
+              <!-- First Reconstruction Image -->
+              <div class="column stl-viewer" style="display: flex; flex-direction: column; align-items: center; padding: 20;">
+                <span style="text-align: center; font-weight: bold;">Reconstruction</span>
+                <img src="./static/images/1_pred.gif" alt="Reconstruction 1" style="width: 200px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+              </div>
+              
+              <!-- Second Reconstruction Image -->
+              <div class="column stl-viewer" style="display: flex; flex-direction: column; align-items: center; padding: 20;">
+                <span style="text-align: center; font-weight: bold;">Reconstruction</span>
+                <img src="./static/images/2_pred.gif" alt="Reconstruction 2" style="width: 200px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+              </div>
+
+            </div>
+
+          </div>      
+        </div>
+
+
     <div class="columns is-centered">
       <div class="column is-full-width">
-
-        <h2 class="title is-3">CAD generation</h2>
-
-        <!-- Image-conditional CAD -->
-        <h3 class="title is-4">Image-conditional CAD generation</h3>
-        <div class="content has-text-justified">
-          <p>
-            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
-            viewpoint such as a stabilized camera by playing back the training deformations.
-          </p>
-        </div>
-
-        <div class="columns is-vcentered is-mobile is-gapless"> <!-- Added is-gapless class -->
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <img src="./static/images/289.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-          </div>
-        
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <img src="./static/images/198.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-          </div>
-        
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <img src="./static/images/386.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-          </div>
-        
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <img src="./static/images/390.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-          </div>
-        </div>
-
-
-        <div class="columns is-vcentered is-mobile is-gapless">
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/289.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
-        
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/198.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
-        
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/386.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
-        
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/390.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
-        </div>
-
-
-        <!-- Image-conditional CAD -->
-        <h3 class="title is-4">Sample diversity of GenCAD</h3>
-        <div class="content has-text-justified">
-          <p>
-            Using <span class="dnerf">GenCAD</span>, you can get multiple CAD samples for the same image input.
-          </p>
-        </div>
+        <h2 class="title is-3">Voxel sequence generation</h2>
 
         <div class="columns is-vcentered is-mobile is-gapless">
 
-          <!-- sample diversity 1 -->
-          <div class="teaser-image" style="display: inline-block;">
-            <img src="./static/images/sample_diversity_1.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-          </div>
+            <!-- Second Reconstruction Image -->
+            <div class="column stl-viewer" style="display: flex; flex-direction: column; align-items: center; padding: 20;">
+              <span style="text-align: center; font-weight: bold;">Partial design</span>
+              <img src="./static/images/3.png" alt="Reconstruction 2" style="width: 200px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </div>
 
           <!-- Unicode Arrow to GenCAD Box -->
           <div class="arrow-container" style="display: flex; align-items: center; margin: 0 5px;">
             <span class="arrow"></span>
           </div>
 
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/sample_diversity_1_1.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
+            <!-- Second Reconstruction Image -->
+            <div class="column stl-viewer" style="display: flex; flex-direction: column; align-items: center; padding: 20;">
+              <span style="text-align: center; font-weight: bold;">Autocomplete</span>
+              <img src="./static/images/3_pred.gif" alt="Reconstruction 2" style="width: 200px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            </div>
 
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/sample_diversity_1_2.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
-
-
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/sample_diversity_1_3.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
-        </div>
-
-
-
-        <div class="columns is-vcentered is-mobile is-gapless">
-
-          <!-- sample diversity 2 -->
-          <div class="teaser-image" style="display: inline-block;">
-            <img src="./static/images/sample_diversity_2.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-          </div>
-
-          <!-- Unicode Arrow to GenCAD Box -->
-          <div class="arrow-container" style="display: flex; align-items: center; margin: 0 5px;">
-            <span class="arrow"></span>
-          </div>
-
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/sample_diversity_2_1.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
-
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/sample_diversity_2_2.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
-
-
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/sample_diversity_2_3.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
-        </div>
-
-
-      </div>      
-    </div>
-
-
-
-    <!-- Retrieval. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">CAD retrieval</h2>
-
-        <!-- Retrieval -->
-        <h3 class="title is-4">Image-conditional CAD retrieval</h3>
-        <div class="content has-text-justified">
-          <p>
-            Next, we show the image-conditional CAD retrieval capabilities of GenCAD. Here we retrieve the top-3 CAD programs from a collection of ~7000 CAD programs.
-          </p>
-        </div>
-
-        <div class="columns is-vcentered is-mobile is-gapless">
-
-          <!-- retrieval 1 -->
-          <div class="teaser-image" style="display: inline-block;">
-            <img src="./static/images/retrieval_1.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-          </div>
-
-          <!-- Unicode Arrow to GenCAD Box -->
-          <div class="arrow-container" style="display: flex; align-items: center; margin: 0 5px;">
-            <span class="arrow"></span>
-          </div>
-
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/retrieval_1_1.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
-
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/retrieval_1_2.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
-
-
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/retrieval_1_3.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
-        </div>
-
-
-
-        <div class="columns is-vcentered is-mobile is-gapless">
-
-          <!-- retrieval 2 -->
-          <div class="teaser-image" style="display: inline-block;">
-            <img src="./static/images/retrieval_2.png" alt="Teaser Image" style="width: 150px; height: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-          </div>
-
-          <!-- Unicode Arrow to GenCAD Box -->
-          <div class="arrow-container" style="display: flex; align-items: center; margin: 0 5px;">
-            <span class="arrow"></span>
-          </div>
-
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/retrieval_2_1.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
-
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/retrieval_2_2.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
-
-
-          <div class="column stl-viewer" style="display: flex; justify-content: center; padding: 0;">
-            <model-viewer src="./static/mesh/retrieval_2_3.glb" alt="3D Model" auto-rotate camera-controls ar shadow-intensity="1" style="width: 200px; height: 200px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            </model-viewer>
-          </div>
         </div>
       </div>
     </div>
@@ -443,11 +296,11 @@
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{alam2024gencad,
-  author    = {Alam, Md Ferdous and Ahmed, Faez},
-  title     = {GenCAD: Image-conditioned Computer-Aided Design Generation with Transformer-based Contrastive Representation and Diffusion Priors},
-  journal   = {xxxx},
-  year      = {xxxx},
+    <pre><code>@article{alam2023representation,
+  author    = {Alam, Md Ferdous and Wang, Yi and Tran, Chin-Yi and Luo, Jieliang},
+  title     = {Representation Learning for Sequential Volumetric Design Tasks},
+  journal   = {arXiv preprint arXiv:2309.02583},
+  year      = {2023},
 }</code></pre>
   </div>
 </section>
